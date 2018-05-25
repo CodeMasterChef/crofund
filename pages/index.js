@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import factory from '../ethereum/factory';
-import { Card, Icon, Image , Button} from 'semantic-ui-react';
+import { Card, Icon, Image, Button } from 'semantic-ui-react';
+import Layout from '../components/Layout';
 
 class CampaignIndex extends Component {
 
@@ -15,7 +16,7 @@ class CampaignIndex extends Component {
             return {
                 header: address,
                 description: (
-                    <a>View Campaign</a>
+                    <a>Detail</a>
                 ),
                 fluid: true
             };
@@ -24,18 +25,21 @@ class CampaignIndex extends Component {
     }
 
     render() {
-        return (<div>
+        return (
+            <Layout>
+                <div>
+                    <h3>Open Project</h3>
+                    <Button
+                        floated="right"
+                        content="Start your Project"
+                        icon="add circle"
+                        primary
+                    />
 
-            <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"></link>
-            <h3>Open Campaign</h3>
-            {this.renderCampaigns()}
-            <Button
-                floated="right"
-                content="Create Campaign"
-                icon="add circle"
-                primary
-              />
-        </div>)
+                    {this.renderCampaigns()}
+                </div>
+            </Layout>
+        )
     }
 }
 
