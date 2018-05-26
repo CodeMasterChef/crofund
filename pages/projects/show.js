@@ -64,7 +64,7 @@ class ProjectShow extends Component {
       }
     ];
     console.log(items);
-     return <Card.Group items={items} />;
+     return <Card.Group items={items} itemsPerRow={1} />;
     // return items.map((item, index) => (
     //   <div className="indent" key={index}>
     //     <div class="content" >
@@ -97,7 +97,7 @@ class ProjectShow extends Component {
             <Grid.Column>
               <Link route={`/projects/${this.props.address}/requests`}>
                 <a>
-                  <Button primary>View Requests</Button>
+                  <Button color='teal'>View Requests</Button>
                 </a>
               </Link>
             </Grid.Column>
