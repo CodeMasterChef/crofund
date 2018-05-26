@@ -97,7 +97,7 @@ class ProjectShow extends Component {
             <Grid.Column>
               <Link route={`/projects/${this.props.address}/requests`}>
                 <a>
-                  <Button primary>View Requests</Button>
+                  <Button color="teal">View Requests</Button>
                 </a>
               </Link>
             </Grid.Column>

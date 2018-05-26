@@ -79,7 +79,7 @@ class RequestNew extends Component {
           </Form.Field>
 
           <Message error header="Error" content={this.state.errorMessage} />
-          <Button primary loading={this.state.loading} disabled={this.state.loading}>
+          <Button color="teal" loading={this.state.loading} disabled={this.state.loading}>
             Create
           </Button>
         </Form>
