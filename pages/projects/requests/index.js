@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Table } from 'semantic-ui-react';
+import { Button, Table , Icon } from 'semantic-ui-react';
 import { Link } from '../../../routes';
 import Layout from '../../../components/Layout';
 import Campaign from '../../../ethereum/campaign';
@@ -43,6 +43,10 @@ class RequestIndex extends Component {
     return (
       <Layout>
         <h3>Requests</h3>
+        <Link route={`/projects/${this.props.address}`}>
+          <a style={{color: '#57BEB9'}}><Icon name='arrow left' /> Back to Project</a>
+        </Link>
+
         <Link route={`/projects/${this.props.address}/requests/new`}>
           <a>
             <Button color="teal" floated="right" style={{ marginBottom: 10 }}>
@@ -53,7 +57,7 @@ class RequestIndex extends Component {
         <Table>
           <Header>
             <Row>
-              <HeaderCell>ID</HeaderCell>
+              <HeaderCell>No.</HeaderCell>
               <HeaderCell>Description</HeaderCell>
               <HeaderCell>Amount</HeaderCell>
               <HeaderCell>Recipient</HeaderCell>
