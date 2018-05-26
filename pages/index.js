@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Dimensions } from 'react';
 import factory from '../ethereum/factory';
-import { Card, Icon, Image, Button, Dropdown, Grid, Menu } from 'semantic-ui-react';
+import { Card, Icon, Image, Button, Dropdown, Grid, Menu, Segment } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import { Link } from '../routes';
+
 
 class CampaignIndex extends Component {
 
@@ -79,25 +80,69 @@ class CampaignIndex extends Component {
         });
     }
 
-    renderCampaigns() {
-        const items = this.state.campaigns.map(obj => {
-            return {
-                header: obj.name,
-                description: (
-                    <div>
-                        <div>{this.state.categoryList[obj.categoryId]}</div>
-                        <img src={obj.imageUrl} style={{ maxWidth: 500, maxHeight: 150 }} />
-                        <div>
-                            <Link route={`/projects/${obj.campaignAddress}`}>
-                                <a>Detail</a>
-                            </Link>
-                        </div>
+    getGridColumn(i) {
+
+        return (
+
+            <Grid.Column width={8}>
+                <div style={{ border: '1px solid lightgray', borderRadius: 5, padding: 5 }}>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <img src={this.state.campaigns[i].imageUrl} style={{ maxWidth: "100%", maxHeight: 200, height: 'auto' }} fluid="true" />
                     </div>
+                    <h3 style={{ textAlign: 'center' }}>{this.state.campaigns[i].name}</h3>
+                    <div style={{ marginBottom: 10, textAlign: 'center' }}>{this.state.categoryList[this.state.campaigns[i].categoryId]} </div>
+                    <div style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }} fluid="true">
+                        <Link route={`/projects/${this.state.campaigns[i].campaignAddress}`}>
+                            <a>
+                                <Button
+                                    floated="left"
+                                    content="Detail"
+                                    icon="unordered list"
+                                    color='teal'
+                                />
+                            </a>
+                        </Link>
+                    </div>
+                </div>
+            </Grid.Column>
+
+        );
+    }
+
+    renderCampaigns() {
+        const items = [];
+        for (let i = 0; i < this.state.campaigns.length; i++) {
+            items.push({
+                description: (
+                    <Grid>
+                        <Grid.Row >
+                            {
+                                this.getGridColumn(i)
+                            }
+                            {
+                                (this.state.campaigns[i + 1]) ? this.getGridColumn(i + 1) : ''
+                            }
+                        </Grid.Row>
+                    </Grid>
+
                 ),
+
                 fluid: true
-            };
-        });
-        return <Card.Group items={items} />
+            });
+        }
+        // const items = this.state.campaigns.map((obj) => {
+        //     return
+        // });
+
+        let styles = {
+            card: {
+                boxShadow: 'none !ipmortant'
+            }
+        };
+
+        return (
+        <Card.Group items={items} style={styles.card}  />
+        );
     }
 
 
