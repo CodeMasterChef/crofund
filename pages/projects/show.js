@@ -83,7 +83,7 @@ class ProjectShow extends Component {
     
               <Grid.Row>
                 <Grid.Column>
-                  <Link route={`/campaigns/${this.props.address}/requests`}>
+                  <Link route={`/projects/${this.props.address}/requests`}>
                     <a>
                       <Button primary>View Requests</Button>
                     </a>
