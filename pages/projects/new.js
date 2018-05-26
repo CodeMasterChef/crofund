@@ -46,7 +46,7 @@ class ProjectNew extends Component {
                         />
                     </Form.Field>
                     <Message error header="Errors" content={this.state.errorMessage}/>
-                    <Button loading={this.state.loading} disabled={this.state.loading} primary>Create</Button>
+                    <Button loading={this.state.loading} disabled={this.state.loading} color="teal">Create</Button>
                 </Form>
             </Layout>
         )
