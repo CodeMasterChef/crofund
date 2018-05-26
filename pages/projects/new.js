@@ -17,7 +17,8 @@ class ProjectNew extends Component {
         this.setState({loading : true , errorMessage : ''});
         try {
             const accounts = await web3.eth.getAccounts();
-            await factory.methods.createCampaign(this.state.minimumContrubtion)
+            const ethers = web3.utils.toWei(this.state.minimumContrubtion, 'ether');
+            await factory.methods.createCampaign(ethers)
                 .send({
                     from: accounts[0]
                 })
@@ -38,7 +39,7 @@ class ProjectNew extends Component {
                     <Form.Field>
                         <label>Minimum contribution</label>
                         <Input
-                            label="wei"
+                            label="ether"
                             labelPosition="right"
                             value={this.state.minimumContrubtion}
                             onChange={event => this.setState({ minimumContrubtion: event.target.value })}
