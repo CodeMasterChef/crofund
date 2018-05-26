@@ -60,31 +60,33 @@ class ProjectNew extends Component {
                 <h1>Create a Project</h1>
                 <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
                     <Form.Field>
+                        <label>Name</label>
+                        <Input
+                            placeholder="Project name"
+                            value={this.state.name}
+                            onChange={event => this.setState({ name: event.target.value })}
+                        />
+                        <label>Description</label>
+                        <Input
+                            placeholder="Description"
+                            value={this.state.description}
+                            onChange={event => this.setState({ description: event.target.value })}
+                        />
+                        <label>Category</label>
+                        <Dropdown placeholder='Games, Art...' fluid search selection
+                            onChange={(event, data) => this.setState({ categoryObj: data })}
+                            options={this.props.categoryList} />
                         <label>Minimum contribution</label>
                         <Input
                             label="ether"
+                            placeholder="0.1, 1, 2..."
                             labelPosition="right"
                             value={this.state.minimumContrubtion}
                             onChange={event => this.setState({ minimumContrubtion: event.target.value })}
                         />
-                        <Dropdown placeholder='Category' fluid search selection
-                            onChange={(event, data) => this.setState({ categoryObj: data })}
-                            options={this.props.categoryList} />
+                        <label>Image Url:</label>
                         <Input
-                            label="Description"
-                            labelPosition="right"
-                            value={this.state.description}
-                            onChange={event => this.setState({ description: event.target.value })}
-                        />
-                        <Input
-                            label="Name"
-                            labelPosition="right"
-                            value={this.state.name}
-                            onChange={event => this.setState({ name: event.target.value })}
-                        />
-                        <Input
-                            label="Photo url"
-                            labelPosition="right"
+                            placeholder='Ex: http://image.png...'
                             value={this.state.imageUrl}
                             onChange={event => this.setState({ imageUrl: event.target.value })}
                         />
