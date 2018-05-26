@@ -6,8 +6,8 @@ export default () => {
     return (
         <Menu style={{ marginTop: '5px' }}>
             <Link route="/">
-                <a className="item">
-                    Crowd Funding
+                <a className="item" style={{padding: '5px', width: '150px'}}>
+                    <img src="https://i.imgur.com/sB5lIsz.png" style={{height: '36px', width: '140px'}}/>
                 </a>
             </Link>
             <Menu.Menu position="right">
