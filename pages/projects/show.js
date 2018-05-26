@@ -32,33 +32,33 @@ class ProjectShow extends Component {
     
         const items = [
           {
-            header: manager,
-            meta: 'Address of Manager',
+            header: 'Address of Manager',
+            meta: manager,
             description:
               'The manager created this project and can create requests to withdraw money',
             style: { overflowWrap: 'break-word' }
           },
           {
-            header:   web3.utils.fromWei( minimumContribution , 'ether'),
-            meta: 'Minimum Contribution (ether)',
+            header: 'Minimum Contribution (ether)',
+            meta:   web3.utils.fromWei( minimumContribution , 'ether'),
             description:
               'You must contribute at least this much ether to become an approver'
           },
           {
-            header: requestsCount,
-            meta: 'Number of Requests',
+            header: 'Number of Requests',
+            meta: requestsCount,
             description:
               'A request tries to withdraw money from the contract. Requests must be approved by approvers'
           },
           {
-            header: approversCount,
-            meta: 'Number of Approvers',
+            header: 'Number of Approvers',
+            meta: approversCount,
             description:
               'Number of people who have already donated to this porject'
           },
           {
-            header: web3.utils.fromWei(balance, 'ether'),
-            meta: 'Campaign Balance (ether)',
+            header: 'Campaign Balance (ether)',
+            meta: web3.utils.fromWei(balance, 'ether'),
             description:
               'The balance is how much money this porject has left to spend.'
           }

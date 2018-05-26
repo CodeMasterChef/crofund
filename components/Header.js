@@ -18,7 +18,7 @@ export default () => {
                                 floated="right"
                                 content="Start a Project"
                                 icon="add circle"
-                                primary
+                                color='teal' 
                             />
                         </a>
                     </Link>
