@@ -1,16 +1,46 @@
 pragma solidity ^0.4.17;
+pragma experimental ABIEncoderV2;
 
-contract CampaignFactory{
-    address[] public deployedCampaigns;
+contract CampaignFactory {
     
-    function createCampaign(uint minimum) public {
-        address newCampaign = new Campaign(minimum , msg.sender);
-        deployedCampaigns.push(newCampaign);
+    struct CampaignObj { 
+        uint categoryId;   
+        address campaignAddress;
     }
     
-    function getDeployedCampaigns() public view returns (address[]) {
-        return deployedCampaigns;
+    // address[] public deployedCampaigns;
+    string[] public categories = ["Games", "Art", "Film", "Technology", "Vehicle"];
+    CampaignObj[] public campaignList;
+    
+    function createCampaign(uint minimum, uint _categoryId, string description, string name, string imageUrl) public {
+        address newCampaign = new Campaign(minimum , msg.sender, _categoryId, description, name, imageUrl);
+        // deployedCampaigns.push(newCampaign);
+        
+         CampaignObj memory newCampaignObj = CampaignObj({
+            categoryId : _categoryId,
+            campaignAddress: newCampaign
+        });
+        campaignList.push(newCampaignObj);
+        
     }
+    
+    // function getDeployedCampaigns() public view returns (CampaignObj[]) {
+    //     return campaignList;
+    // }
+    
+    function getAllCategories() public view returns (string[]) {
+        return categories;
+    }
+    
+    // function getCampaignsByCategoryId(uint _categoryId) public view returns(CampaignObj[]) {
+    //     CampaignObj[] storage _campaignList;
+    //     for(uint i = 0; i < campaignList.length; i++) {
+    //         if(campaignList[i].categoryId == _categoryId) {
+    //             _campaignList.push(campaignList[i]);
+    //         }
+    //     }
+    //     return _campaignList;
+    // }
     
 }
 
@@ -23,6 +53,7 @@ contract Campaign {
         bool complete;
         uint approvalCount;
         mapping(address => bool) approvals;
+        
     }
 
     address public manager;
@@ -30,15 +61,24 @@ contract Campaign {
     mapping(address => bool) public approvers;
     Request[] public requests;
     uint public approversCount;
+    uint public categoryId;
+    string imageUrl;
+    string description;
+    string name;
+    
    
     modifier restricted(){
         require (msg.sender == manager);
         _;
     }
    
-    function Campaign(uint minimum, address creator) public{
+    function Campaign(uint minimum, address creator, uint _categoryId, string _description, string _name, string _imageUrl) public{
         manager = creator;
         minimumContribution = minimum;
+        categoryId = _categoryId;
+        description = _description;
+        name = _name;
+        imageUrl = _imageUrl;
     }
     
     function contribute() public payable {
@@ -80,14 +120,18 @@ contract Campaign {
     }
 
     function getSummary() public view returns (
-      uint, uint, uint, uint, address
+      uint, uint, uint, uint, address, uint, string, string, string
       ) {
         return (
           minimumContribution,
           address(this).balance,
           requests.length,
           approversCount,
-          manager
+          manager,
+          categoryId,
+          imageUrl,
+          description,
+          name
         );
     }
 
