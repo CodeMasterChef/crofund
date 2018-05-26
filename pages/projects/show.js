@@ -84,6 +84,7 @@ class ProjectShow extends Component {
               <h2>{this.props.name}</h2>
               <p>{this.props.description}</p>
               <Image src={this.props.imageUrl} fluid />
+              <br/>
               {this.renderCards()}
             </Grid.Column>
             <Grid.Column width={6}>
