@@ -16,7 +16,7 @@ contract CampaignFactory {
         address newCampaign = new Campaign(minimum , msg.sender, _categoryId, description, name, imageUrl);
         // deployedCampaigns.push(newCampaign);
         
-         CampaignObj memory newCampaignObj = CampaignObj({
+        CampaignObj memory newCampaignObj = CampaignObj({
             categoryId : _categoryId,
             campaignAddress: newCampaign
         });
@@ -30,6 +30,10 @@ contract CampaignFactory {
     
     function getAllCategories() public view returns (string[]) {
         return categories;
+    }
+
+    function getCampaignListCount() public view returns (uint) {
+        return campaignList.length;
     }
     
     // function getCampaignsByCategoryId(uint _categoryId) public view returns(CampaignObj[]) {
