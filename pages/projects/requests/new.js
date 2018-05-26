@@ -18,7 +18,11 @@ class RequestNew extends Component {
   static async getInitialProps(props) {
     const { address } = props.query;
 
-    return { address };
+    const campaign = Campaign(address);
+    const summary = await campaign.methods.getSummary().call();
+    
+
+    return { address , balance: summary[1]};
   }
 
   onSubmit = async event => {
@@ -44,6 +48,7 @@ class RequestNew extends Component {
   };
 
   render() {
+       const {balance} = this.props;
     return (
       <Layout>
         <Link route={`/projects/${this.props.address}/requests`}>
@@ -52,6 +57,9 @@ class RequestNew extends Component {
         <h3>Create a Request</h3>
         <p>
         Your requests for withdrawing money from your funding.
+        </p>
+        <p>
+        Project Balance: <b>{web3.utils.fromWei(balance, 'ether')} ether</b>
         </p>
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
           <Form.Field>
@@ -89,7 +97,7 @@ class RequestNew extends Component {
            <b>{this.state.message}</b>
           </div>
           <div style={{width: '100%'}}>
-          <Button color="teal" fluid loading={this.state.loading} disabled={this.state.loading}>
+          <Button color="teal" fluid loading={this.state.loading} disabled={this.state.loading || balance === 0 }>
             Create
           </Button>
           </div>

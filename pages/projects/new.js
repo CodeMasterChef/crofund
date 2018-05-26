@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Layout from '../../components/Layout';
-import { Form, Button, Input, Message, Dropdown } from 'semantic-ui-react';
+import { Form, Button, Input, Message, Dropdown, Image, Grid } from 'semantic-ui-react';
 import factory from '../../ethereum/factory';
 import web3 from '../../ethereum/web3';
 import { Router } from '../../routes';
@@ -13,13 +13,11 @@ class ProjectNew extends Component {
         description: '',
         name: '',
         imageUrl: '',
-        categoryObj: {}
+        categoryObj: {},
+        message: ''
     }
 
     static async getInitialProps(props) {
-
-        // console.log('asdfasdf');
-        // const categoryList = await factory.methods.getAllCategories().call();
         const categoryList = [
             { key: '0', value: '0', text: 'Games' },
             { key: '1', value: '1', text: 'Art' },
@@ -28,7 +26,7 @@ class ProjectNew extends Component {
             { key: '4', value: '4', text: 'Vehicle' },
         ];
         // ["Games", "Art", "Film", "Technology", "Vehicle"];
-        // console.log('category list: ', categoryList);
+
         return { categoryList };
     }
 
@@ -36,21 +34,20 @@ class ProjectNew extends Component {
 
     onSubmit = async (event) => {
         event.preventDefault();
-        this.setState({ loading: true, errorMessage: '' });
+        this.setState({ loading: true, errorMessage: '', message: 'Please wait...' });
         try {
             const accounts = await web3.eth.getAccounts();
             const ethers = web3.utils.toWei(this.state.minimumContrubtion, 'ether');
-            console.log('mm', parseInt(this.state.categoryObj.value));
             await factory.methods.createCampaign(ethers, parseInt(this.state.categoryObj.value), this.state.description, this.state.name, this.state.imageUrl)
                 .send({
                     from: accounts[0]
                 })
             Router.pushRoute('/');
+            this.setState({ loading: false, message: 'Success' });
         } catch (err) {
-            console.log(err);
-            this.setState({ errorMessage: err.message });
+            this.setState({ loading: false, errorMessage: err.message, message: '' });
         }
-        this.setState({ loading: false });
+
     }
 
     render() {
@@ -60,23 +57,24 @@ class ProjectNew extends Component {
                 <h1>Create a Project</h1>
                 <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
                     <Form.Field>
-                        <label>Name</label>
+                        <label>Name:</label>
                         <Input
                             placeholder="Project name"
                             value={this.state.name}
                             onChange={event => this.setState({ name: event.target.value })}
                         />
-                        <label>Description</label>
+                        <label>Description:</label>
                         <Input
                             placeholder="Description"
                             value={this.state.description}
                             onChange={event => this.setState({ description: event.target.value })}
                         />
-                        <label>Category</label>
+                        <label>Category:</label>
                         <Dropdown placeholder='Games, Art...' fluid search selection
                             onChange={(event, data) => this.setState({ categoryObj: data })}
                             options={this.props.categoryList} />
-                        <label>Minimum contribution</label>
+                        <label>Minimum contribution:</label>
+                        <p style={{ fontSize: '11px' }}>The least ether amount to become an approver.</p>
                         <Input
                             label="ether"
                             placeholder="0.1, 1, 2..."
@@ -84,17 +82,32 @@ class ProjectNew extends Component {
                             value={this.state.minimumContrubtion}
                             onChange={event => this.setState({ minimumContrubtion: event.target.value })}
                         />
-                        <label>Image Url:</label>
-                        <Input
-                            placeholder='Ex: http://image.png...'
-                            value={this.state.imageUrl}
-                            onChange={event => this.setState({ imageUrl: event.target.value })}
-                        />
+                        <label>Image URL:</label>
 
+                        <Grid>
+                            <Grid.Row>
+                                <Grid.Column width={13}>
+                                    <Input
+                                        placeholder='Ex: http://imigur.com/image.png'
+                                        value={this.state.imageUrl}
+                                        onChange={event => this.setState({ imageUrl: event.target.value })}
+                                    />
+                                </Grid.Column>
+                                <Grid.Column width={3}>
+                                    <Image src={this.state.imageUrl} size='small' fluid />
+                                </Grid.Column>
+                            </Grid.Row>
+                        </Grid>
 
                     </Form.Field>
                     <Message error header="Errors" content={this.state.errorMessage} />
-                    <Button loading={this.state.loading} disabled={this.state.loading} color="teal">Create</Button>
+                    <div style={{ color: '#57BEB9' }}>
+                        <b>{this.state.message}</b>
+                    </div>
+                    <div style={{ width: '100%' }} >
+                        <Button loading={this.state.loading} fluid disabled={this.state.loading} color="teal">Create</Button>
+                    </div>
+
                 </Form>
             </Layout>
         )

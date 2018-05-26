@@ -11,7 +11,7 @@ class ProjectShow extends Component {
   static async getInitialProps(props) {
     const campaign = Campaign(props.query.address);
     const summary = await campaign.methods.getSummary().call();
-    console.log(summary);
+   
     return {
       address: props.query.address,
       minimumContribution: summary[0],
@@ -64,7 +64,7 @@ class ProjectShow extends Component {
 
       },
       {
-        header: 'Campaign Balance (ether)',
+        header: 'Project Balance (ether)',
         meta:
           'The balance is how much money this porject has left to spend.',
         description: web3.utils.fromWei(balance, 'ether')

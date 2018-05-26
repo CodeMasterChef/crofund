@@ -23,6 +23,8 @@ class RequestRow extends Component {
                 from: accounts[0]
             });
             this.setState({  approverLoading: false, aprroveMessage: 'Success!' });
+            Router.replaceRoute(`/projects/${this.props.address}/requests`);
+
         } catch (err) {
             this.setState({  approverLoading: false, aprroveErrorMessage: err.message, aprroveMessage: '' });
 
@@ -40,6 +42,7 @@ class RequestRow extends Component {
                 from: accounts[0]
             });
             this.setState({ finalizeLoading: false,  finalizeMessage: 'Success!' });
+            Router.replaceRoute(`/projects/${this.props.address}/requests`);
         } catch (err) {
             this.setState({finalizeLoading: false,  errorMessage: err.message, aprroveMessage: '' });
         }
@@ -48,17 +51,18 @@ class RequestRow extends Component {
     render() {
         const { Row, Cell } = Table;
         const { id, request, approversCount } = this.props;
-        const readyToFinalize = request.approvalCount > approversCount / 2;
+        console.log(request);
+        const readyToFinalize = request.approvalCount >= approversCount / 2;
 
         return (
             <Row
                 disabled={request.complete}
                 positive={readyToFinalize && !request.complete}
             >
-                <Cell>{id}</Cell>
+                <Cell>{id + 1}</Cell>
                 <Cell>{request.description}</Cell>
                 <Cell>{web3.utils.fromWei(request.value, 'ether')}</Cell>
-                <Cell>{request.recipient}</Cell>
+                <Cell>{request.reciptent}</Cell>
                 <Cell>
                     {request.approvalCount}/{approversCount}
                 </Cell>
@@ -71,7 +75,7 @@ class RequestRow extends Component {
                     </div>
                     {request.complete ? null : (
                         <Button color="teal"
-                        loading={this.state.approverLoading} disabled={this.state.approverLoading}
+                        loading={this.state.approverLoading} disabled={this.state.approverLoading }
                          onClick={this.onApprove}>
                             Approve
             </Button>
@@ -87,7 +91,7 @@ class RequestRow extends Component {
                     </div>
 
                     {request.complete ? null : (
-                        <Button color="teal" loading={this.state.finalizeLoading} disabled={this.state.finalizeLoading} onClick={this.onFinalize}>
+                        <Button color="teal" loading={this.state.finalizeLoading} disabled={this.state.finalizeLoading || !readyToFinalize} onClick={this.onFinalize}>
                             Finalize
             </Button>
                        

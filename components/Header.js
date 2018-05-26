@@ -17,7 +17,7 @@ export default () => {
                             <Button
                                 floated="right"
                                 content="Start a Project"
-                                icon="add circle"
+                                icon="rocket"
                                 color='teal' 
                             />
                         </a>
