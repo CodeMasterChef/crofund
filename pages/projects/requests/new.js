@@ -63,6 +63,8 @@ class RequestNew extends Component {
             <label>Value in Ether</label>
             <Input
               value={this.state.value}
+              label="ether"
+              labelPosition="right"
               onChange={event => this.setState({ value: event.target.value })}
             />
           </Form.Field>
@@ -77,7 +79,7 @@ class RequestNew extends Component {
           </Form.Field>
 
           <Message error header="Error" content={this.state.errorMessage} />
-          <Button primary loading={this.state.loading}  disabled={this.state.loading}>
+          <Button primary loading={this.state.loading} disabled={this.state.loading}>
             Create
           </Button>
         </Form>
