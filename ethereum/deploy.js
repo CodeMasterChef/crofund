@@ -3,8 +3,8 @@ const Web3 = require('web3');
 const compiledFactory = require('./build/CampaignFactory.json');
 
 const provider = new HDWalletProvider(
-    'indicate load deer faint second bread borrow sock script race iron insane',
-    'https://rinkeby.infura.io/vR1QE50GrMpomru7QLGJ'
+    'dune dinner stool aspect spin family please approve lemon swap quantum bid',
+    'https://rinkeby.infura.io/sjPW9jCRhQxSehjAx9WP'
   );
 const web3 = new Web3(provider);
 
@@ -18,7 +18,7 @@ const deploy = async () => {
  
   const result = await new web3.eth.Contract(interface)
     .deploy({ data: bytecode  })
-    .send({ gas: '1000000', from: accounts[0] });
+    .send({ gas: '2000000', from: accounts[0] });
 
   console.log('Contract deployed to', result.options.address);
 };
