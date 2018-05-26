@@ -6,19 +6,25 @@ contract CampaignFactory {
     struct CampaignObj { 
         uint categoryId;   
         address campaignAddress;
+        string name;
+        string imageUrl;
+        string description;
     }
     
-    // address[] public deployedCampaigns;
+    address[] public deployedCampaigns;
     string[] public categories = ["Games", "Art", "Film", "Technology", "Vehicle"];
     CampaignObj[] public campaignList;
     
-    function createCampaign(uint minimum, uint _categoryId, string description, string name, string imageUrl) public {
-        address newCampaign = new Campaign(minimum , msg.sender, _categoryId, description, name, imageUrl);
-        // deployedCampaigns.push(newCampaign);
+    function createCampaign(uint minimum, uint _categoryId, string _description, string _name, string _imageUrl) public {
+        address newCampaign = new Campaign(minimum , msg.sender, _categoryId, _description, _name, _imageUrl);
+        deployedCampaigns.push(newCampaign);
         
         CampaignObj memory newCampaignObj = CampaignObj({
             categoryId : _categoryId,
-            campaignAddress: newCampaign
+            campaignAddress: newCampaign,
+            name: _name,
+            imageUrl: _imageUrl,
+            description: _description
         });
         campaignList.push(newCampaignObj);
         
