@@ -1,6 +1,6 @@
 import React, { Component, Dimensions } from 'react';
 import factory from '../ethereum/factory';
-import { Card, Icon, Image, Button, Dropdown, Grid, Menu, Segment } from 'semantic-ui-react';
+import { Card, Icon, Image, Button, Dropdown, Grid, Menu, Segment, Dimmer, Loader } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import { Link } from '../routes';
 
@@ -17,7 +17,8 @@ class CampaignIndex extends Component {
             'Vehicle',
         ],
         campaignsStorage: [],
-        campaignListCount: 0
+        campaignListCount: 0,
+        loading: false
     };
 
 
@@ -43,9 +44,11 @@ class CampaignIndex extends Component {
     }
 
     async getListCampaign(menuIndex) {
-        let campaigns;
+        this.setState({ loading: true });
+        let campaigns = [];
         switch (menuIndex) {
             case -2:
+            case -1:
                 // get from server
                 const campaignListCount = await factory.methods.getCampaignListCount().call();
                 console.log('count', campaignListCount);
@@ -59,10 +62,10 @@ class CampaignIndex extends Component {
                 );
                 this.setState({ campaignsStorage: campaigns, campaignListCount: campaignListCount });
                 break;
-            case -1:
+           
                 // get all
-                campaigns = this.state.campaignsStorage;
-                break;
+                // campaigns = this.state.campaignsStorage;
+                // break;
             default:
 
                 campaigns = this.state.campaignsStorage.filter(item => {
@@ -75,8 +78,10 @@ class CampaignIndex extends Component {
                 break;
         }
 
+
         this.setState({
-            campaigns
+            campaigns,
+            loading: false
         });
     }
 
@@ -111,7 +116,7 @@ class CampaignIndex extends Component {
 
     renderCampaigns() {
         const items = [];
-        for (let i = 0; i < this.state.campaigns.length; i++) {
+        for (let i = 0; i < this.state.campaigns.length; i += 2) {
             items.push({
                 description: (
                     <Grid>
@@ -141,7 +146,7 @@ class CampaignIndex extends Component {
         };
 
         return (
-        <Card.Group items={items} style={styles.card}  />
+            <Card.Group items={items} style={styles.card} />
         );
     }
 
@@ -176,6 +181,19 @@ class CampaignIndex extends Component {
             <Layout>
                 {this.renderMenu()}
                 {/* <h3>{this.state.activeItem}</h3> */}
+                {
+                    this.state.loading ? (
+                        <Segment>
+                            <Dimmer active inverted>
+                                <Loader inverted>Loading</Loader>
+                            </Dimmer>
+
+                            <Image src='https://react.semantic-ui.com/assets/images/wireframe/short-paragraph.png' />
+                        </Segment>
+                    ) : false
+                }
+
+
                 {this.renderCampaigns()}
             </Layout>
         )
