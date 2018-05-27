@@ -92,7 +92,7 @@ class CampaignIndex extends Component {
             <Grid.Column width={8}>
                 <div style={{ border: '1px solid lightgray', borderRadius: 5, padding: 5 }}>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <img src={this.state.campaigns[i].imageUrl} style={{ maxWidth: "100%", maxHeight: 200, height: 'auto' }} fluid="true" />
+                        <img src={this.state.campaigns[i].imageUrl} style={{ maxWidth: "100%", maxHeight: 300, height: 'auto' }} fluid="true" />
                     </div>
                     <h3 style={{ textAlign: 'center' }}>{this.state.campaigns[i].name}</h3>
                     <div style={{ marginBottom: 10, textAlign: 'center' }}>{this.state.categoryList[this.state.campaigns[i].categoryId]} </div>
